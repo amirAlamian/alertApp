@@ -19,7 +19,7 @@ services:
       - "9200:9200"
       - "9300:9300"
     environment:
-      ELASTIC_PASSWORD: Y9vv7D43%wGGM
+      ELASTIC_PASSWORD: Y9vv7D43wGGM
       # Use single node discovery in order to disable production mode and avoid bootstrap checks
       # see https://www.elastic.co/guide/en/elasticsearch/reference/current/bootstrap-checks.html
       discovery.type: single-node
@@ -67,7 +67,7 @@ services:
     networks: ["stack"]
     command: --strict.perms=false -e # -e flag to log to stderr and disable syslog/file output
     # environment:
-    #   - ELASTIC_PASSWORD=Y9vv7D43%wGGM
+    #   - ELASTIC_PASSWORD=Y9vv7D43wGGM
     #   - apm-server.host=0.0.0.0
     #   - setup.kibana.host=kibana:5601
     #   - output.elasticsearch.hosts=["elasticsearch:9200"]

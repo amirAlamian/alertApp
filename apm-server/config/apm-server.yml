@@ -266,19 +266,19 @@ apm-server:
   # Specify cache key expiration via this setting. Default is 30 seconds.
   #agent.config.cache.expiration: 30s
 
-  kibana:
+  # kibana:
     # For APM Agent configuration in Kibana, enabled must be true.
     #enabled: false
 
     # Scheme and port can be left out and will be set to the default (`http` and `5601`).
     # In case you specify an additional path, the scheme is required: `http://localhost:5601/path`.
     # IPv6 addresses should always be defined as: `https://[2001:db8::1]:5601`.
-    host: "kibana:5601"
+    # host: "kibana:5601"
 
     # Optional protocol and basic auth credentials.
     #protocol: "https"
-    username: "elastic"
-    password: "Y9vv7D43%wGGM"
+    # username: "elastic"
+    # password: "Y9vv7D43wGGM"
 
     # Optional HTTP path.
     #path: ""
@@ -524,7 +524,7 @@ output.elasticsearch:
   # Authentication credentials - either API key or username/password.
   #api_key: "id:api_key"
   username: "elastic"
-  password: "Y9vv7D43%wGGM"
+  password: "Y9vv7D43wGGM"
 
   # Dictionary of HTTP parameters to pass within the url with index operations.
   #parameters:
