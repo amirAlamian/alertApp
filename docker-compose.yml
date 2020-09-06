@@ -1,11 +1,11 @@
 ---
-version: '3.6'
+version: "3.6"
 services:
   elasticsearch:
     restart: always
     image: elasticsearch:7.9.1
     container_name: elasticsearch
-    networks: ['stack']
+    networks: ["stack"]
     volumes:
       - type: bind
         source: ./elasticsearch/config/elasticsearch.yml
@@ -19,7 +19,7 @@ services:
       - "9200:9200"
       - "9300:9300"
     environment:
-      ELASTIC_PASSWORD: El@stiC123#@!
+      ELASTIC_PASSWORD: Y9vv7D43%wGGM
       # Use single node discovery in order to disable production mode and avoid bootstrap checks
       # see https://www.elastic.co/guide/en/elasticsearch/reference/current/bootstrap-checks.html
       discovery.type: single-node
@@ -34,16 +34,16 @@ services:
         target: /usr/share/kibana/config/kibana.yml
         read_only: true
 
-    ports: ['5601:5601']
-    networks: ['stack']
-    depends_on: ['elasticsearch']
-   
+    ports: ["5601:5601"]
+    networks: ["stack"]
+    depends_on: ["elasticsearch"]
+
   logstash:
     restart: always
     image: logstash:7.9.1
     container_name: logstash
-    networks: ['stack']
-    depends_on: ['elasticsearch']
+    networks: ["stack"]
+    depends_on: ["elasticsearch"]
     volumes:
       - type: bind
         source: ./logstash/config/logstash.yml
@@ -61,19 +61,24 @@ services:
     restart: always
     image: docker.elastic.co/apm/apm-server:7.9.1
     container_name: apm_server
-    ports: 
-     - '8200:8200'
-     - '8201:8200'
-    networks: ['stack']
-    command: --strict.perms=false -e  # -e flag to log to stderr and disable syslog/file output
+    ports:
+      - "8200:8200"
+      - "8201:8200"
+    networks: ["stack"]
+    command: --strict.perms=false -e # -e flag to log to stderr and disable syslog/file output
+    # environment:
+    #   - ELASTIC_PASSWORD=Y9vv7D43%wGGM
+    #   - apm-server.host=0.0.0.0
+    #   - setup.kibana.host=kibana:5601
+    #   - output.elasticsearch.hosts=["elasticsearch:9200"]
+    depends_on: ["elasticsearch", "kibana"]
+    volumes:
+      - type: bind
+        source: ./apm-server/config/apm-server.yml
+        target: /usr/share/apm-server/apm-server.yml
+        read_only: true
 
-    environment:
-      - apm-server.host=0.0.0.0
-      - setup.kibana.host=kibana:5601
-      - output.elasticsearch.hosts=["elasticsearch:9200"]
-    depends_on: ['elasticsearch', 'kibana']
-
-networks: {stack: {}}
+networks: { stack: {} }
 # use docker volume to persist ES data outside of a container.
 volumes:
   es_data:
