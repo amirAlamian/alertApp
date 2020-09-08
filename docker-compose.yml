@@ -16,7 +16,7 @@ services:
         target: /usr/share/elasticsearch/data
       - type: volume
         source: certs
-        target: $CERTS_DIR
+        target: /usr/share/elasticsearch/config/certificates
 
     ports:
       - "9200:9200"
