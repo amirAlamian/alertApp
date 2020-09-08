@@ -11,3 +11,6 @@ xpack.encryptedSavedObjects.encryptionKey: 631E33DFBA389C8AE7811DB2E22FDA5913
 #
 elasticsearch.username: elastic
 elasticsearch.password: Y9vv7D43wGGM
+
+#elasticsearch.ssl.certificateAuthorities: [ "~/elk/elasticsearch/elasticsearch-ca.pem" ]
+#elasticsearch.ssl.truststore.path: "~/elk/elasticsearch/elastic-stack-ca.p12"

@@ -12,3 +12,6 @@ xpack.license.self_generated.type: trial
 xpack.security.enabled: true
 xpack.monitoring.collection.enabled: true
 indices.breaker.fielddata.limit: 75%
+
+#xpack.security.http.ssl.enabled: true
+#xpack.security.http.ssl.keystore.path: "http.p12"
