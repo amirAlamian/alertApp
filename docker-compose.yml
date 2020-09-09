@@ -12,15 +12,18 @@ services:
         target: /usr/share/elasticsearch/config/elasticsearch.yml
         read_only: true
       - type: volume
-        source: es_data
+        source: data
         target: /usr/share/elasticsearch/data
+      - type: volume
+        source: certs
+        target: /usr/share/elasticsearch/config/certificates
 
     ports:
       - "9200:9200"
       - "9300:9300"
     environment:
       ELASTIC_PASSWORD: Y9vv7D43wGGM
-      ES_JAVA_OPTS: "-Xmx5g -Xms5g" # this option should be half of sever ram
+      # ES_JAVA_OPTS: "-Xmx5g -Xms5g" # this option should be half of sever ram
       # Use single node discovery in order to disable production mode and avoid bootstrap checks
       # see https://www.elastic.co/guide/en/elasticsearch/reference/current/bootstrap-checks.html
       discovery.type: single-node
@@ -82,5 +85,5 @@ services:
 networks: { stack: {} }
 # use docker volume to persist ES data outside of a container.
 volumes:
-  es_data:
+  data:
   certs:
