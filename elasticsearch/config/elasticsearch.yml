@@ -9,9 +9,9 @@ network.host: 0.0.0.0
 ## see https://www.elastic.co/guide/en/elasticsearch/reference/current/setup-xpack.html
 #
 xpack.license.self_generated.type: basic
-xpack.security.enabled: true
-xpack.monitoring.collection.enabled: true
-indices.breaker.fielddata.limit: 75%
+# xpack.security.enabled: true
+# xpack.monitoring.collection.enabled: true
+# indices.breaker.fielddata.limit: 75%
 # xpack.security.http.ssl.key: /usr/share/elasticsearch/config/certificates/elasticsearch/elasticsearch.key
 # xpack.security.http.ssl.certificate_authorities: /usr/share/elasticsearch/config/certificates/ca/ca.crt
 # xpack.security.http.ssl.certificate: /usr/share/elasticsearch/config/certificates/elasticsearch/elasticsearch.crt
