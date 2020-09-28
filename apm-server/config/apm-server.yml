@@ -106,7 +106,7 @@ apm-server:
   # Agents include the token in the following format: Authorization: Bearer <secret-token>.
   # It is recommended to use an authorization token in combination with SSL enabled,
   # and save the token in the apm-server keystore.
-  #secret_token:
+  secret_token: "DQ8H1hA9eYsgJ9tOU0MFrHwaVb0y0IftnbYcio9larrJqIoaxY"
 
   # Enable API key authorization by setting enabled to true. By default API key support is disabled.
   # Agents include a valid API key in the following format: Authorization: ApiKey <token>.
