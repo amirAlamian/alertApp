@@ -21,7 +21,7 @@ services:
       - "9200:9200"
       - "9300:9300"
     environment:
-      ELASTIC_PASSWORD: Y9vv7D43wGGM
+      # ELASTIC_PASSWORD: Y9vv7D43wGGM
       # ES_JAVA_OPTS: "-Xmx5g -Xms5g" # this option should be half of sever ram
       # Use single node discovery in order to disable production mode and avoid bootstrap checks
       # see https://www.elastic.co/guide/en/elasticsearch/reference/current/bootstrap-checks.html
@@ -31,15 +31,32 @@ services:
     image: kibana:7.9.1
     container_name: kibana
 
+    # volumes:
+    #   - type: bind
+    #     source: ./kibana/config/kibana.yml
+    #     target: /usr/share/kibana/config/kibana.yml
+    #     read_only: true
+    environment:
+      SERVERNAME: localhost
+      ELASTICSEARCH_URL: https://elasticsearch:9200
+      ELASTICSEARCH_HOSTS: https://elasticsearch:9200
+      ELASTICSEARCH_USERNAME: kibana_system
+      ELASTICSEARCH_PASSWORD: lwOPujlDqzMAZsYyxeJh
+      ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES: /usr/share/elasticsearch/config/certificates/ca/ca.crt
+      SERVER_SSL_ENABLED: "true"
+      SERVER_SSL_KEY: /usr/share/elasticsearch/config/certificates/kibana/kibana.key
+      SERVER_SSL_CERTIFICATE: /usr/share/elasticsearch/config/certificates/kibana/kibana.crt
+    ports: ["5601:5601"]
+    networks: ["stack"]
+    depends_on: ["elasticsearch"]
     volumes:
       - type: bind
         source: ./kibana/config/kibana.yml
         target: /usr/share/kibana/config/kibana.yml
         read_only: true
-
-    ports: ["5601:5601"]
-    networks: ["stack"]
-    depends_on: ["elasticsearch"]
+      - type: volume
+        source: certs
+        target: /usr/share/elasticsearch/config/certificates
 
   logstash:
     restart: always
@@ -69,18 +86,58 @@ services:
       - "8201:8200"
     networks: ["stack"]
     command: --strict.perms=false -e # -e flag to log to stderr and disable syslog/file output
-    # environment:
+    environment:
     #   - ELASTIC_PASSWORD=Y9vv7D43wGGM
     #   - apm-server.host=0.0.0.0
     #   - setup.kibana.host=kibana:5601
     #   - output.elasticsearch.hosts=["elasticsearch:9200"]
+      SERVERNAME: localhost
+      ELASTICSEARCH_URL: https://elasticsearch:9200
+      ELASTICSEARCH_HOSTS: https://elasticsearch:9200
+      ELASTICSEARCH_USERNAME: apm_system
+      ELASTICSEARCH_PASSWORD: aGKiw64UztqjHp9GiBqY
+      ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES: /usr/share/elasticsearch/config/certificates/ca/ca.crt
+      SERVER_SSL_ENABLED: "true"
+      SERVER_SSL_KEY: /usr/share/elasticsearch/config/certificates/apm-server/apm-server.key
+      SERVER_SSL_CERTIFICATE: /usr/share/elasticsearch/config/certificates/apm-server/apm-server.crt
     depends_on: ["elasticsearch", "kibana"]
     volumes:
       - type: bind
         source: ./apm-server/config/apm-server.yml
         target: /usr/share/apm-server/apm-server.yml
         read_only: true
-
+      - type: volume
+        source: certs
+        target: /usr/share/elasticsearch/config/certificates
+  alerting-app:
+    restart: always
+    build:
+      context: .
+      dockerfile: ./alerting/docker/node/Dockerfile
+    volumes:
+      - ./alerting:/app
+      - type: volume
+        source: certs
+        target: /usr/share/elasticsearch/config/certificates
+    environment:
+    #   - ELASTIC_PASSWORD=Y9vv7D43wGGM
+    #   - apm-server.host=0.0.0.0
+    #   - setup.kibana.host=kibana:5601
+    #   - output.elasticsearch.hosts=["elasticsearch:9200"]
+      SERVERNAME: localhost
+      ELASTICSEARCH_URL: https://elasticsearch:9200
+      ELASTICSEARCH_HOSTS: https://elasticsearch:9200
+      ELASTICSEARCH_USERNAME: elastic
+      ELASTICSEARCH_PASSWORD: o7RMngoWR4PvQYyESrRz
+      ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES: /usr/share/elasticsearch/config/certificates/ca/ca.crt
+      SERVER_SSL_ENABLED: "true"
+      SERVER_SSL_KEY: /usr/share/elasticsearch/config/certificates/alerting-app/alerting-app.key
+      SERVER_SSL_CERTIFICATE: /usr/share/elasticsearch/config/certificates/alerting-app/alerting-app.crt
+    ports:
+      - 3000:3000
+    depends_on:
+      - kibana
+      - elasticsearch
 networks: { stack: {} }
 # use docker volume to persist ES data outside of a container.
 volumes:

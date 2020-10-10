@@ -510,7 +510,7 @@ output.elasticsearch:
   # Scheme and port can be left out and will be set to the default (`http` and `9200`).
   # In case you specify and additional path, the scheme is required: `http://localhost:9200/path`.
   # IPv6 addresses should always be defined as: `https://[2001:db8::1]:9200`.
-  hosts: ["elasticsearch:9200"]
+  hosts: ["https://elasticsearch:9200"]
 
   # Boolean flag to enable or disable the output module.
   #enabled: true
@@ -524,7 +524,7 @@ output.elasticsearch:
   # Authentication credentials - either API key or username/password.
   #api_key: "id:api_key"
   username: "elastic"
-  password: "Y9vv7D43wGGM"
+  password: "o7RMngoWR4PvQYyESrRz"
 
   # Dictionary of HTTP parameters to pass within the url with index operations.
   #parameters:
@@ -617,7 +617,7 @@ output.elasticsearch:
   #timeout: 90
 
   # Enable custom SSL settings. Set to false to ignore custom SSL settings for secure communication.
-  #ssl.enabled: true
+  ssl.enabled: true
 
   # Optional SSL configuration options. SSL is off by default, change the `protocol` option if you want to enable `https`.
   # Configure SSL verification mode. If `none` is configured, all server hosts
@@ -632,12 +632,15 @@ output.elasticsearch:
 
   # List of root certificates for HTTPS server verifications.
   #ssl.certificate_authorities: ["/etc/pki/root/ca.pem"]
+  ssl.certificate_authorities: ["/usr/share/elasticsearch/config/certificates/ca/ca.crt"]
 
   # Certificate for SSL client authentication.
   #ssl.certificate: "/etc/pki/client/cert.pem"
+  ssl.certificate: "/usr/share/elasticsearch/config/certificates/apm-server/apm-server.crt"
 
   # Client Certificate Key
   #ssl.key: "/etc/pki/client/cert.key"
+  ssl.key: "/usr/share/elasticsearch/config/certificates/apm-server/apm-server.key"
 
   # Optional passphrase for decrypting the Certificate Key.
   # It is recommended to use the provided keystore instead of entering the passphrase in plain text.

@@ -5,3 +5,15 @@ instances:
       - localhost
     ip:
       - 127.0.0.1
+  - name: kibana
+    dns:
+      - kibana
+      - localhost
+  - name: apm-server
+    dns:
+      - apm-server
+      - localhost
+  - name: alerting-app
+    dns:
+      - alerting-app
+      - localhost

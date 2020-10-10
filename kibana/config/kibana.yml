@@ -4,13 +4,13 @@
 #
 server.name: kibana
 server.host: "0"
-elasticsearch.hosts: ["http://elasticsearch:9200"]
 xpack.monitoring.ui.container.elasticsearch.enabled: true
 xpack.encryptedSavedObjects.encryptionKey: 631E33DFBA389C8AE7811DB2E22FDA5913
 ## X-Pack security credentials
 #
-elasticsearch.username: elastic
-elasticsearch.password: Y9vv7D43wGGM
+# elasticsearch.hosts: ["https://elasticsearch:9200"]
+# elasticsearch.username: kibana_system
+# elasticsearch.password: TMvch3T8mLzLQvPePnnx
 
-#elasticsearch.ssl.certificateAuthorities: [ "~/elk/elasticsearch/elasticsearch-ca.pem" ]
+# elasticsearch.ssl.certificateAuthorities: [ "/usr/share/elasticsearch/config/certificates/ca/ca.crt" ]
 #elasticsearch.ssl.truststore.path: "~/elk/elasticsearch/elastic-stack-ca.p12"

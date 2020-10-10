@@ -1,0 +1,17 @@
+{
+  "name": "alerting",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "nodemon": "nodemon --delay 80ms --watch . index"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "elasticsearch": "^16.7.1",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.4"
+  }
+}
