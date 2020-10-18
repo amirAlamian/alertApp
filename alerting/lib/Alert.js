@@ -28,10 +28,10 @@ class Alert{
     }
 
 
-    getUnReadAlertsFromElastic = async (client, indexName) => {
+    getUnReadAlertsFromElastic = async (client) => {
 
         const data =  await client.search({
-            index: indexName,
+            index: alert.indices,
             body: {
                 query: {
                     
@@ -40,14 +40,14 @@ class Alert{
                 }
             }
         })
-        await this.#sendReadDataResponseToElastic(client , indexName);
+        await this.#sendReadDataResponseToElastic(client , );
         return data;
     }
 
     #sendReadDataResponseToElastic = async (client , indexName) => {
 
       return await client.updateByQuery({
-            index: indexName,
+            index: alert.indices,
             body: {
                 script: {
                     source: "ctx._source.isReaded = true ",

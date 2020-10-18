@@ -19,6 +19,5 @@ services:
           - ca: /usr/share/elasticsearch/config/certificates/ca/ca.crt
             key: /usr/share/elasticsearch/config/certificates/alerting-app/alerting-app.key
             cert: /usr/share/elasticsearch/config/certificates/alerting-app/alerting-app.crt
-        indices:
-          - test_index
+        indices: test_index
          
