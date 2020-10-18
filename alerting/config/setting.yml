@@ -20,4 +20,11 @@ services:
             key: /usr/share/elasticsearch/config/certificates/alerting-app/alerting-app.key
             cert: /usr/share/elasticsearch/config/certificates/alerting-app/alerting-app.crt
         indices: test_index
+    sms:
+        host: alert-sms
+        port: 3000
+        version: 1
+        URIs:
+          - sendSms: sendSms 
+        receiver: 09214698677
          

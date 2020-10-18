@@ -1,0 +1,123 @@
+{
+    "env": {
+        "node": true,
+        "es6": true,
+        "commonjs": true,
+        "jest": true
+    },
+    "extends": ["eslint:recommended"],
+    "parser": "babel-eslint",
+    "globals": {
+        "Atomics": "readonly",
+        "SharedArrayBuffer": "readonly"
+    },
+    "parserOptions": {
+        "ecmaVersion": 2020
+    },
+    "ignorePatterns": [
+        "config/regexPatterns.js",
+        "package-lock.json",
+        "package.json",
+        "node_modules/*",
+        "tests"
+    ],
+    "rules": {
+        "curly": ["error" , "multi-line"],
+        "no-eval": ["error"],
+        "strict": ["error", "global"],
+        "semi-spacing": [
+            "error",
+            {
+                "before": false,
+                "after": true
+            }
+        ],
+        "space-in-parens": ["error", "never"],
+        "block-spacing": ["error", "always"],
+        "array-bracket-spacing": ["error", "always"],
+        "key-spacing": [
+            "error",
+            {
+                "afterColon": true,
+                "mode": "strict"
+            }
+        ],
+        "object-curly-spacing": ["error", "always"],
+        "comma-spacing": [
+            "error",
+            {
+                "before": false,
+                "after": true
+            }
+        ],
+        "semi": ["error", "always"],
+        "quotes": ["error", "single"],
+        "indent": ["error", 4, { "SwitchCase": 1 }],
+        "max-len": [
+            "warn",
+            {
+                "code": 120,
+                "ignoreUrls": true,
+                "ignoreComments": true,
+                "ignoreRegExpLiterals": true
+            }
+        ],
+        "brace-style": ["error", "1tbs"],
+        "no-var": ["error"],
+        "prefer-const": ["error"],
+        "one-var": ["error", "never"],
+        "max-statements-per-line": [
+            "error",
+            {
+                "max": 1
+            }
+        ],
+        "padding-line-between-statements": [
+            "error",
+            {
+                "blankLine": "always",
+                "prev": "block-like",
+                "next": "*"
+            },
+            {
+                "blankLine": "always",
+                "prev": "*",
+                "next": "block-like"
+            },
+            {
+                "blankLine": "always",
+                "prev": "function",
+                "next": "*"
+            },
+            {
+                "blankLine": "always",
+                "prev": "*",
+                "next": "cjs-export"
+            },
+            {
+                "blankLine": "always",
+                "prev": "*",
+                "next": "class"
+            },
+            {
+                "blankLine": "always",
+                "prev": "class",
+                "next": "*"
+            }
+        ],
+        "camelcase": [
+            "error",
+            {
+                "properties": "never"
+            }
+        ],
+        "linebreak-style": ["error", "unix"],
+        "eol-last": ["error", "always"],
+        "no-trailing-spaces": ["error"],
+        "eqeqeq": ["error"],
+        "newline-per-chained-call": ["error"],
+        "global-require": ["error"],
+        "no-extra-boolean-cast": ["error"],
+        "no-console": ["error"]
+    }
+}

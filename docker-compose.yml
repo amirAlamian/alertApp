@@ -105,7 +105,8 @@ services:
     volumes:
       - ./alert_sms:/app
     ports:
-      - "8094:3000"
+      - "8095:3000"
+    networks: ["stack"] 
     environment:
       - "NODE_ENV=docker"
       - "jwt=123456"
