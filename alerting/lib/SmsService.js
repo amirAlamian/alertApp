@@ -1,7 +1,8 @@
 const rp = require('request-promise');
-const fs = require('fs');
-const yaml = require('js-yaml');
-const { sms } = yaml.safeLoad(fs.readFileSync('./config/setting.yml'), 'utf8').services;
+
+const config = require('config');
+
+const  sms  = config.get('sms');
 
 class SmsService {
 
@@ -17,7 +18,10 @@ class SmsService {
             body,
             json: true,
         };
-        return await rp(options);
+
+        if(sms.status) {
+            return await rp(options);
+        }
     }
 }
 

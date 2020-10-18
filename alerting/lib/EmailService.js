@@ -1,7 +1,8 @@
 const nodemailer = require('nodemailer');
-const fs = require('fs');
-const yaml = require('js-yaml');
-const { email } = yaml.safeLoad(fs.readFileSync('./config/setting.yml'), 'utf8').services;
+
+const config = require('config');
+
+const  email  = config.get('email');
 
 class EmailService{
 
@@ -29,13 +30,16 @@ class EmailService{
           subject: email.subject,
           text
       };
-      transporter.sendMail(mailOptions, function (error, info) {
-          if (error) {
-              console.log('error', error);
-          } else {
-              console.log('Email sent: ' + info.response);
-          }
-      });
+
+      if(email.status) {
+          transporter.sendMail(mailOptions, function (error, info) {
+              if (error) {
+                  console.log('error', error);
+              } else {
+                  console.log('Email sent: ' + info.response);
+              }
+          });
+      }
   }
 }
 

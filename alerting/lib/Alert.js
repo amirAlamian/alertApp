@@ -1,7 +1,9 @@
 const { Client } = require('@elastic/elasticsearch');
 const fs = require('fs');
-const yaml = require('js-yaml');
-const { alert }  = yaml.safeLoad(fs.readFileSync('./config/setting.yml'), 'utf8').services;
+
+const config = require('config');
+
+const  alert  = config.get('alert');
 
 class Alert{
 
