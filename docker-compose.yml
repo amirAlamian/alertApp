@@ -96,6 +96,33 @@ services:
       - type: volume
         source: certs
         target: /usr/share/elasticsearch/config/certificates
+  alert-sms:
+    container_name: alert-sms
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./alert_sms:/app
+    ports:
+      - "8094:3000"
+    environment:
+      - "NODE_ENV=docker"
+      - "jwt=123456"
+      - "PORT=3000"
+    depends_on:
+      [
+        "alerting-app",
+      ]
+    command: [
+        "sh",
+        "-c",
+        "ls
+        && npm install
+        && npm run dev",
+      ]
+    env_file:
+      - .env
   alerting-app:
     restart: always
     build:
