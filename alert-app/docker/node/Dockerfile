@@ -9,7 +9,7 @@ WORKDIR /app
 
 COPY . /app
 
-COPY ./alerting/docker/wait-for-it.sh /usr/local
+COPY ./alert-app/docker/wait-for-it.sh /usr/local
 
 RUN chmod +x /usr/local/wait-for-it.sh
 

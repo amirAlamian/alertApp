@@ -103,7 +103,7 @@ services:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - ./alert_smss:/app
+      - ./alert-sms:/app
     ports:
       - "8095:3000"
     networks: ["stack"] 

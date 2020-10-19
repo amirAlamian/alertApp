@@ -13,7 +13,7 @@ instances:
     dns:
       - apm-server
       - localhost
-  - name: alerting-app
+  - name: alert-app
     dns:
-      - alerting-app
+      - alert-app
       - localhost
