@@ -34,3 +34,10 @@ sms:
       - 09216553942
 job:
     time: '*/5 * * * *' #every 5 minutes
+
+indices:
+    pim-user:
+        error: pim_user_error2
+    messaging:
+        cpu_usage: messaging_cpu_usage
+
