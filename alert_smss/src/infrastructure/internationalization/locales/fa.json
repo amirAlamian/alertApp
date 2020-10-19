@@ -1,0 +1,26 @@
+{
+	"generic": {
+		"error": {
+			"internalServer": "generic.error.internalServer",
+			"failed": "generic.error.failed"
+		}
+	},
+	"validation": {
+		"sms": {
+			"phoneNumber": {
+				"type": "validation.sms.phoneNumber.type",
+				"pattern": "validation.sms.phoneNumber.pattern"
+			},
+			"sender": {
+				"pattern": "validation.sms.sender.pattern",
+				"type": "validation.sms.sender.type"
+			},
+			"template": {
+				"type": "validation.sms.template.type"
+			},
+			"receiver": {
+				"pattern": "validation.sms.receiver.pattern"
+			}
+		}
+	}
+}

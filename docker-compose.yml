@@ -103,7 +103,7 @@ services:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - ./alert_sms:/app
+      - ./alert_smss:/app
     ports:
       - "8095:3000"
     networks: ["stack"] 
@@ -113,7 +113,7 @@ services:
       - "PORT=3000"
     depends_on:
       [
-        "alerting-app",
+        "alert-app",
       ]
     command: [
         "sh",
@@ -124,13 +124,13 @@ services:
       ]
     env_file:
       - .env
-  alerting-app:
+  alert-app:
     restart: always
     build:
       context: .
-      dockerfile: ./alerting/docker/node/Dockerfile
+      dockerfile: ./alert-app/docker/node/Dockerfile
     volumes:
-      - ./alerting:/app
+      - ./alert-app:/app
       - type: volume
         source: certs
         target: /usr/share/elasticsearch/config/certificates
