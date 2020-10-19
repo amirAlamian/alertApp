@@ -21,21 +21,12 @@ services:
       - "9200:9200"
       - "9300:9300"
     environment:
-      # ELASTIC_PASSWORD: Y9vv7D43wGGM
-      # ES_JAVA_OPTS: "-Xmx5g -Xms5g" # this option should be half of sever ram
-      # Use single node discovery in order to disable production mode and avoid bootstrap checks
-      # see https://www.elastic.co/guide/en/elasticsearch/reference/current/bootstrap-checks.html
       discovery.type: single-node
   kibana:
     restart: always
     image: kibana:7.9.1
     container_name: kibana
 
-    # volumes:
-    #   - type: bind
-    #     source: ./kibana/config/kibana.yml
-    #     target: /usr/share/kibana/config/kibana.yml
-    #     read_only: true
     environment:
       SERVERNAME: localhost
       ELASTICSEARCH_URL: https://elasticsearch:9200
@@ -87,10 +78,6 @@ services:
     networks: ["stack"]
     command: --strict.perms=false -e # -e flag to log to stderr and disable syslog/file output
     environment:
-    #   - ELASTIC_PASSWORD=Y9vv7D43wGGM
-    #   - apm-server.host=0.0.0.0
-    #   - setup.kibana.host=kibana:5601
-    #   - output.elasticsearch.hosts=["elasticsearch:9200"]
       SERVERNAME: localhost
       ELASTICSEARCH_URL: https://elasticsearch:9200
       ELASTICSEARCH_HOSTS: https://elasticsearch:9200
@@ -109,6 +96,34 @@ services:
       - type: volume
         source: certs
         target: /usr/share/elasticsearch/config/certificates
+  alert-sms:
+    container_name: alert-sms
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./alert_sms:/app
+    ports:
+      - "8095:3000"
+    networks: ["stack"] 
+    environment:
+      - "NODE_ENV=docker"
+      - "jwt=123456"
+      - "PORT=3000"
+    depends_on:
+      [
+        "alerting-app",
+      ]
+    command: [
+        "sh",
+        "-c",
+        "ls
+        && npm install
+        && npm run dev",
+      ]
+    env_file:
+      - .env
   alerting-app:
     restart: always
     build:
@@ -119,20 +134,11 @@ services:
       - type: volume
         source: certs
         target: /usr/share/elasticsearch/config/certificates
+    networks: ["stack"] 
+    env_file:
+      - .env
     environment:
-    #   - ELASTIC_PASSWORD=Y9vv7D43wGGM
-    #   - apm-server.host=0.0.0.0
-    #   - setup.kibana.host=kibana:5601
-    #   - output.elasticsearch.hosts=["elasticsearch:9200"]
-      SERVERNAME: localhost
-      ELASTICSEARCH_URL: https://elasticsearch:9200
-      ELASTICSEARCH_HOSTS: https://elasticsearch:9200
-      ELASTICSEARCH_USERNAME: elastic
-      ELASTICSEARCH_PASSWORD: o7RMngoWR4PvQYyESrRz
-      ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES: /usr/share/elasticsearch/config/certificates/ca/ca.crt
       SERVER_SSL_ENABLED: "true"
-      SERVER_SSL_KEY: /usr/share/elasticsearch/config/certificates/alerting-app/alerting-app.key
-      SERVER_SSL_CERTIFICATE: /usr/share/elasticsearch/config/certificates/alerting-app/alerting-app.crt
     ports:
       - 3000:3000
     depends_on:
