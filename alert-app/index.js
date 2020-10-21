@@ -1,51 +1,30 @@
 const cron = require('cron').CronJob;
-const Alert = require('./lib/Alert');
-const Email = require('./lib/EmailService');
-const SmsService = require('./lib/SmsService');
+const Alert = require('./src/services/Alert');
+const Email = require('./src/services/EmailService');
+
 const config = require('config');
 const job  = config.get('job');
 const indices  = config.get('indices');
+
+
+const DBCreator = require('./src/DB/DBJsonCreator');
+DBCreator();
+
+
+// alert service starting
 const client = Alert.init();
+// Email service starting
 const transporter = Email.init();
-
-console.log(indices);
-
-async function getAlerts (){
-
-    for (const key in indices){
-
-        for (const secondKey in indices[key]) {
-
-            const data = await Alert.getUnReadAlertsFromElastic(client, indices[key][secondKey]);
-
-            const hits = data.body.hits.hits;
-
-            if(hits.length){
-                console.log("<=========>",hits);
-
-                await Email.sendAlertViaEmailToClient(transporter, JSON.stringify(hits));
-
-                // await SmsService.sendAlertsViaSms('hello world');
-
-            }
-        }
-
-    }
-
-
-}
-
-getAlerts();
-
-// new cron(
-//     job.time, //this means every Saturday at 00:00 AM reset the leader board
-//     async function () {
-//         getAlerts();
-//     },
-//     null,
-//     true,
-//     'Asia/Tehran'
-// );
-
+const controller = require('./src/controller');
+controller(indices, client, transporter);
+new cron(
+    job.time, //this means every Saturday at 00:00 AM reset the leader board
+    async function () {
+        controller(indices, client, transporter);
+    },
+    null,
+    true,
+    'Asia/Tehran'
+);
 
 console.log('up and runnig');

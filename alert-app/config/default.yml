@@ -1,3 +1,14 @@
+alert:
+    host: https://elasticsearch
+    port: 9200
+    auth:
+        - username: elastic
+          password: o7RMngoWR4PvQYyESrRz
+    ssl:
+        - ca: /usr/share/elasticsearch/config/certificates/ca/ca.crt
+          key: /usr/share/elasticsearch/config/certificates/alert-app/alert-app.key
+          cert: /usr/share/elasticsearch/config/certificates/alert-app/alert-app.crt
+
 email:
     status: true
     host: mail.myagah.com
@@ -7,20 +18,9 @@ email:
         - username: elk@myagah.com
           password: E123456e@
     receivers:
-        - amiralamian10@gmail.com
-        - nasrollahy.hamidreza@gmail.com
+        - s.sharifian@myagah.com
     sender: elk@myagah.com
-alert:
-    host: https://elasticsearch
-    port: 9200
-    auth:
-        - username: elastic
-          password: o7RMngoWR4PvQYyESrRz
-    ssl:
-        - ca: /usr/share/elasticsearch/config/certificates/ca/ca.crt
-          key: /usr/share/elasticsearch/config/certificates/alerting-app/alerting-app.key
-          cert: /usr/share/elasticsearch/config/certificates/alerting-app/alerting-app.crt
-    indices: test_index
+
 sms:
     status: true
     host: alert-sms
@@ -30,14 +30,51 @@ sms:
         - sendSms: sendSms
     receiver: 
       - 09214698677
-      - 09120975633
-      - 09216553942
+    #   - 09120975633
+    #   - 09216553942
+
 job:
-    time: '*/5 * * * *' #every 5 minutes
-
+    time: '*/2 * * * *' #every 5 minutes
+  
 indices:
-    pim-user:
-        error: pim_user_error2
-    messaging:
-        cpu_usage: messaging_cpu_usage
+    apm:
+        pim-user-transaction: 
+            index: pim-user-trans
+            isPrimary: true
+        pim-user-error:
+            index: pim-user-error
+            isPrimary: true
+    metrics:
+        cpu_usage_amirAlamian:
+            index: alamian_cpu_usage
+            isPrimary: false
+        ram_usage_amirAlamian:
+            index: alamian_ram_usage
+            isPrimary: false
+    # Uptime:
+    #     pcdmServer: uptime_pcdm_server
+    # AuditBeat:
 
+context:
+    Uptime:
+        email:
+            negative: '<h1 style = "color : red"> Uptime server alert </h1>  <p style= "font-size:14px">  %tags% </p>   <p style= "font-size:14px">  %context_message% </p>  <p style= "font-size:14px"> %timestamp% </p> <p style= "font-size:14px"> server ip =>  %ip% </p> '
+            positive: '<h1 style = "color : green"> Uptime server alert </h1>  <p style= "font-size:14px">  %tags% </p>   <p style= "font-size:14px">server is up and running</p>  <p style= "font-size:14px"> %timestamp% </p> <p style= "font-size:14px"> server ip =>  %ip% </p> '
+        sms: 
+            negative: 'Uptime server alert  %space%%tags% %space%%context_message% %space%%timestamp%  %space%%ip%'
+            positive: 'Uptime server alert  %space%%tags% %space%server is up and running %space%%timestamp%  %space%%ip%'
+    metrics:
+        email:
+            negative: '<h1 style = "color: red">   Metrics usage alert </h1>  <p style= "font-size:14px">  %tags% </p>   <p style= "font-size:14px">  %context_reason% </p>  <p style= "font-size:14px">  %timestamp% </p>  <p style= "font-size:14px"> server ip =>  %ip% </p>'
+            positive: '<h1 style = "color: green">   Metrics usage alert </h1>  <p style= "font-size:14px">  %tags% </p>   <p style= "font-size:14px">%usage%</p>  <p style= "font-size:14px">  %timestamp% </p>  <p style= "font-size:14px"> server ip =>  %ip% </p>'
+        sms: 
+            negative: 'Metrics usage alert  %space%%tags% %space%%context_reason% %space%%timestamp% %space%%ip%'
+            positive: 'Metrics usage alert  %space%%tags% %space%%usage% %space%%timestamp% %space%%ip%'
+    apm:
+        email:
+            negative: '<h1 style = "color : red"> apm server alert </h1>  <p style= "font-size:14px">  %tags% </p>   <p style= "font-size:14px">  %context_message% </p>  <p style= "font-size:14px"> %timestamp% </p> <p style= "font-size:14px"> server ip =>  %ip% </p> '
+            positive: ''
+        sms:
+            negative: 'apm server alert  %space%%tags% %space%%context_message% %space%%timestamp%  %space%%ip%'
+            positive: ''
+    AuditBeat:

@@ -1,5 +1,4 @@
 const nodemailer = require('nodemailer');
-
 const config = require('config');
 
 const  email  = config.get('email');
@@ -22,13 +21,13 @@ class EmailService{
   }
 
 
-  sendAlertViaEmailToClient = async (transporter, text) => {
+  sendAlertViaEmailToClient = async (transporter, html) => {
 
       const mailOptions = {
           from: email.sender,
           to: email.receivers,
           subject: email.subject,
-          text
+          html
       };
 
       if(email.status) {

@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "nodemon": "nodemon --delay 80ms --watch . index"
+    "nodemon": "nodemon --ignore src/DB/ --delay 80ms . "
   },
   "keywords": [],
   "author": "",
@@ -19,6 +19,7 @@
     "js-yaml": "^3.14.0",
     "nodemailer": "6.4.13",
     "nodemon": "^2.0.4",
+    "moment-timezone": "0.5.31",
     "request": "^2.88.2",
     "request-promise": "^4.2.6"
   },
