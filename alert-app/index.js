@@ -16,7 +16,7 @@ const client = Alert.init();
 // Email service starting
 const transporter = Email.init();
 const controller = require('./src/controller');
-controller(indices, client, transporter);
+
 new cron(
     job.time, //this means every Saturday at 00:00 AM reset the leader board
     async function () {
