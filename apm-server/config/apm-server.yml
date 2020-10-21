@@ -57,8 +57,8 @@ apm-server:
   #---------------------------- APM Server - Secure Communication with Agents ----------------------------
 
   # Enable secure communication between APM agents and the server. By default ssl is disabled.
-  #ssl:
-    #enabled: false
+  ssl:
+    enabled: false
 
     # Path to file containing the certificate for server authentication.
     # Needs to be configured when ssl is enabled.
@@ -95,7 +95,7 @@ apm-server:
     # Options are `none`, `optional`, and `required`.
     # Default is `none`. If `certificate_authorities` are configured,
     # the value for `client_authentication` is automatically changed to `required`.
-    #client_authentication: "none"
+    client_authentication: "none"
 
   # The APM Server endpoints can be secured by configuring a secret token or enabling the usage of API keys. Both
   # options can be enabled in parallel, allowing Elastic APM agents to chose whichever mechanism they support.
@@ -106,7 +106,7 @@ apm-server:
   # Agents include the token in the following format: Authorization: Bearer <secret-token>.
   # It is recommended to use an authorization token in combination with SSL enabled,
   # and save the token in the apm-server keystore.
-  secret_token: "DQ8H1hA9eYsgJ9tOU0MFrHwaVb0y0IftnbYcio9larrJqIoaxY"
+  # secret_token: "DQ8H1hA9eYsgJ9tOU0MFrHwaVb0y0IftnbYcio9larrJqIoaxY"
 
   # Enable API key authorization by setting enabled to true. By default API key support is disabled.
   # Agents include a valid API key in the following format: Authorization: ApiKey <token>.
@@ -903,7 +903,7 @@ output.elasticsearch:
   # and certificates will be accepted. In this mode, SSL based connections are
   # susceptible to man-in-the-middle attacks. Use only for testing. Default is
   # `full`.
-  #ssl.verification_mode: full
+  ssl.verification_mode: none
 
   # List of supported/valid TLS versions. By default all TLS versions 1.0 up to
   # 1.2 are enabled.
