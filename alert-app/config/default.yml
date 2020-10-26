@@ -30,30 +30,16 @@ sms:
         - sendSms: sendSms
     receiver: 
       - 09214698677
-    #   - 09120975633
-    #   - 09216553942
+
 
 job:
-    time: '*/2 * * * *' #every 5 minutes
+    time: '*/5 * * * *' #every 5 minutes
   
 indices:
     apm:
-        pim-user-transaction: 
-            index: pim-user-trans
-            isPrimary: true
-        pim-user-error:
-            index: pim-user-error
-            isPrimary: true
     metrics:
-        cpu_usage_amirAlamian:
-            index: alamian_cpu_usage
-            isPrimary: false
-        ram_usage_amirAlamian:
-            index: alamian_ram_usage
-            isPrimary: false
-    # Uptime:
-    #     pcdmServer: uptime_pcdm_server
-    # AuditBeat:
+    Uptime:
+
 
 context:
     Uptime:
@@ -77,4 +63,3 @@ context:
         sms:
             negative: 'apm server alert  %space%%tags% %space%%context_message% %space%%timestamp%  %space%%ip%'
             positive: ''
-    AuditBeat:
