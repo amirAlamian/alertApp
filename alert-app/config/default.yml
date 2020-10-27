@@ -33,7 +33,7 @@ sms:
 
 
 job:
-    time: '*/2 * * * *' #every 5 minutes
+    time: '*/5 * * * *' #every 5 minutes
   
 indices:
     apm:
