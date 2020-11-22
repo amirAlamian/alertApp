@@ -3,7 +3,7 @@ alert:
     port: 9200
     auth:
         - username: elastic
-          password: o7RMngoWR4PvQYyESrRz
+          password: Zs66gRczqhtFwkQuaaUPjMR
     ssl:
         - ca: /usr/share/elasticsearch/config/certificates/ca/ca.crt
           key: /usr/share/elasticsearch/config/certificates/alert-app/alert-app.key
@@ -18,11 +18,11 @@ email:
         - username: elk@myagah.com
           password: E123456e@
     receivers:
-        - s.sharifian@myagah.com
+        - sharifiansepide@gmail.com
     sender: elk@myagah.com
 
 sms:
-    status: true
+    status: false
     host: alert-sms
     port: 3000
     version: 1
@@ -31,14 +31,42 @@ sms:
     receiver: 
       - 09214698677
 
+hardDisk:
+    maxUsage: 90%
 
 job:
-    time: '*/5 * * * *' #every 5 minutes
+    ordinaryTime: '*/5 * * * *' #every 5 minutes
+    specialTime:  '* * * * *' #every 1 minute
+    hardDiskTime: '* * */1 * *' #every 1 hour
   
 indices:
-    apm:
-    metrics:  
-    Uptime:
+    # apm:
+    metrics:
+        crypto_cpu_usage:
+            index: darixo_cpu_usage_index
+            isPrimary: false  
+        darixo_ram_uasge:
+            index: darixo_ram_usage_index
+            isPrimary: false
+        darixo_load:
+            index: darixo_load_index
+            isPrimary: false
+        darixo_inbound:
+            index: darixo_inbound_index
+            isPrimary: false
+        darixo_outbound:
+            index: darixo_outbound_index
+            isPrimary: false
+    # Uptime:
+    #     darixo_server_uptime:
+    #         index: darixo_uptime_index
+    #         isPrimery: true
+
+specialIndices:
+    docker:
+        darixo_container_uptime:
+            index: heartbeat-*
+            isPrimary: true
 
 context:
     Uptime:
@@ -50,8 +78,8 @@ context:
             positive: 'Uptime server alert  %space%%tags% %space%server is up and running %space%%timestamp%  %space%%ip%'
     metrics:
         email:
-            negative: '<h1 style = "color: red">   Metrics usage alert </h1>  <p style= "font-size:14px">  %tags% </p>   <p style= "font-size:14px">  %context_reason% </p>  <p style= "font-size:14px">  %timestamp% </p>  <p style= "font-size:14px"> server ip =>  %ip% </p>'
-            positive: '<h1 style = "color: green">   Metrics usage alert </h1>  <p style= "font-size:14px">  %tags% </p>   <p style= "font-size:14px">%usage%</p>  <p style= "font-size:14px">  %timestamp% </p>  <p style= "font-size:14px"> server ip =>  %ip% </p>'
+            negative: '<h1 style = "color: red">   Metrics usage alert </h1>  <p style= "font-size:14px">  %tags% </p>   <p style= "font-size:14px">  %context_reason% </p>  <p style= "font-size:14px">  %timestamp% </p>  <p style= "font-size:14px"> %ip% </p>'
+            positive: '<h1 style = "color: green">   Metrics usage alert </h1>  <p style= "font-size:14px">  %tags% </p>   <p style= "font-size:14px">%usage%</p>  <p style= "font-size:14px">  %timestamp% </p>  <p style= "font-size:14px"> %ip% </p>'
         sms: 
             negative: 'Metrics usage alert  %space%%tags% %space%%context_reason% %space%%timestamp% %space%%ip%'
             positive: 'Metrics usage alert  %space%%tags% %space%%usage% %space%%timestamp% %space%%ip%'
@@ -62,3 +90,11 @@ context:
         sms:
             negative: 'apm server alert  %space%%tags% %space%%context_message% %space%%timestamp%  %space%%ip%'
             positive: ''
+    docker:
+        email:
+            negative: '<h1 style = "color : red"> Docker container alert </h1>  <p style= "font-size:14px">  %tags% </p>   <p style= "font-size:14px">  %context_message% </p>  <p style= "font-size:14px"> %timestamp% </p> <p style= "font-size:14px">%ip% </p> '
+            positive: '<h1 style = "color : green"> Docker container alert </h1>  <p style= "font-size:14px">  %tags% </p>   <p style= "font-size:14px">containers are up and running</p>  <p style= "font-size:14px"> %timestamp% </p> <p style= "font-size:14px"> %ip% </p> '
+        sms: 
+            negative: 'Docker container alert  %space%%tags% %space%%context_message% %space%%timestamp%  %space%%ip%'
+            positive: 'Docker container alert  %space%%tags% %space%containers are up and running %space%%timestamp%  %space%%ip%'
+

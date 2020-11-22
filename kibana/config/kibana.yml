@@ -11,6 +11,6 @@ xpack.encryptedSavedObjects.encryptionKey: 631E33DFBA389C8AE7811DB2E22FDA5913
 # elasticsearch.hosts: ["https://elasticsearch:9200"]
 # elasticsearch.username: kibana_system
 # elasticsearch.password: TMvch3T8mLzLQvPePnnx
-
-# elasticsearch.ssl.certificateAuthorities: [ "/usr/share/elasticsearch/config/certificates/ca/ca.crt" ]
+map.includeElasticMapsService: false
+#elasticsearch.ssl.certificateAuthorities: [ "/usr/share/elasticsearch/config/certificates/ca/ca.crt" ]
 #elasticsearch.ssl.truststore.path: "~/elk/elasticsearch/elastic-stack-ca.p12"

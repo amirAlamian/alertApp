@@ -6,7 +6,6 @@ module.exports = (lastAlert) => {
     const DateNow = moment(_Date.now).tz('Asia/Tehran')
         .format('HH:mm:ss')
         .split(':');
-
     const time = lastAlert._source.timestamp.split(':');
 
     const PassedHours = DateNow[0]-time[0];

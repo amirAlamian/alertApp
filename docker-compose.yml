@@ -33,7 +33,7 @@ services:
       ELASTICSEARCH_URL: https://elasticsearch:9200
       ELASTICSEARCH_HOSTS: https://elasticsearch:9200
       ELASTICSEARCH_USERNAME: kibana_system
-      ELASTICSEARCH_PASSWORD: lwOPujlDqzMAZsYyxeJh
+      ELASTICSEARCH_PASSWORD: e3rBxEYPjpWFNX5gBfdGTEZ
       ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES: /usr/share/elasticsearch/config/certificates/ca/ca.crt
       SERVER_SSL_ENABLED: "true"
       SERVER_SSL_KEY: /usr/share/elasticsearch/config/certificates/kibana/kibana.key
@@ -56,6 +56,16 @@ services:
     container_name: logstash
     networks: ["stack"]
     depends_on: ["elasticsearch"]
+    environment:
+      SERVERNAME: localhost
+      ELASTICSEARCH_URL: https://elasticsearch:9200
+      ELASTICSEARCH_HOSTS: https://elasticsearch:9200
+      ELASTICSEARCH_USERNAME: logstash_system
+      ELASTICSEARCH_PASSWORD: w7qdNsHeqR9g8QxR9DSVEeW
+      ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES: /usr/share/elasticsearch/config/certificates/ca/ca.crt
+      SERVER_SSL_ENABLED: "true"
+      SERVER_SSL_KEY: /usr/share/elasticsearch/config/certificates/logstash/logstash.key
+      SERVER_SSL_CERTIFICATE: /usr/share/elasticsearch/config/certificates/logstash/logstash.crt
     volumes:
       - type: bind
         source: ./logstash/config/logstash.yml
@@ -65,10 +75,14 @@ services:
         source: ./logstash/pipeline
         target: /usr/share/logstash/pipeline
         read_only: true
+      - type: volume
+        source: certs
+        target: /usr/share/elasticsearch/config/certificates
     ports:
       - "5000:5000/tcp"
       - "5000:5000/udp"
       - "9600:9600"
+      - "5044:5044"
   apm-server:
     restart: always
     image: docker.elastic.co/apm/apm-server:7.9.1
@@ -83,7 +97,7 @@ services:
       ELASTICSEARCH_URL: https://elasticsearch:9200
       ELASTICSEARCH_HOSTS: https://elasticsearch:9200
       ELASTICSEARCH_USERNAME: apm_system
-      ELASTICSEARCH_PASSWORD: aGKiw64UztqjHp9GiBqY
+      ELASTICSEARCH_PASSWORD: 4RbXeRPE7YP75kANnxf3c6L
       ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES: /usr/share/elasticsearch/config/certificates/ca/ca.crt
       SERVER_SSL_ENABLED: "true"
       SERVER_SSL_KEY: /usr/share/elasticsearch/config/certificates/apm-server/apm-server.key

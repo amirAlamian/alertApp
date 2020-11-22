@@ -16,7 +16,7 @@
 - <span style="color: cyan; font-size:15px"> for set optional passwords use this command </span>
 
 ```bash
-  docker exec -it elasticsearch /bin/bash -c "bin/    elasticsearch-setup-passwords interactive --batch --url https://elasticsearch:9200"
+  docker exec -it elasticsearch /bin/bash -c "bin/elasticsearch-setup-passwords interactive --batch --url https://elasticsearch:9200"
 ```
 
  > https://www.elastic.co/guide/en/elastic-stack-get-started/7.x/get-started-docker.html
