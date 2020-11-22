@@ -38,6 +38,7 @@ job:
     ordinaryTime: '*/5 * * * *' #every 5 minutes
     specialTime:  '* * * * *' #every 1 minute
     hardDiskTime: '* * */1 * *' #every 1 hour
+    auditBeatTime: '* * * * *' #every 1 minute
   
 indices:
     # apm:
@@ -66,6 +67,10 @@ specialIndices:
     docker:
         darixo_container_uptime:
             index: heartbeat-*
+            isPrimary: true
+    audit:
+        darixo_login_user:
+            index: auditbeat-*
             isPrimary: true
 
 context:
@@ -97,4 +102,8 @@ context:
         sms: 
             negative: 'Docker container alert  %space%%tags% %space%%context_message% %space%%timestamp%  %space%%ip%'
             positive: 'Docker container alert  %space%%tags% %space%containers are up and running %space%%timestamp%  %space%%ip%'
-
+    AuditBeat:
+        email:
+            negative: '<h1 style = "color: red">   Auditbeat alert </h1>  <p style= "font-size:14px">  %tags% </p>   <p style= "font-size:14px">  %message% </p>  <p style= "font-size:14px">  %timestamp% </p>  <p style= "font-size:14px"> %ip% </p>'
+        sms: 
+            negative: 'Auditbeat alert  %space%%tags% %space%%message% %space%%timestamp% %space%%ip%'

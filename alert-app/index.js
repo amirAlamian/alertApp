@@ -17,6 +17,7 @@ const {
     getSpecialAlertsController,
     getAlertController,
     getHardDiskStatus,
+    getAuditAlertController
 } = require('./src/controller');
 
 new cron(
@@ -46,6 +47,16 @@ new cron(
     async function () {
         getHardDiskStatus(client, transporter);
         console.log('hard disk job is running');
+    },
+    null,
+    true,
+    'Asia/Tehran'
+);
+new cron(
+    job.auditBeatTime, 
+    async function () {
+        getAuditAlertController(client, transporter);
+        console.log('audit beat job is running');
     },
     null,
     true,

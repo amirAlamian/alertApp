@@ -149,6 +149,40 @@ class Alert {
         this.#sendReadHardStatusDataToElastic(client, index);
         return data;
     };
+    getAuditAlertsFromElastic = async (client, index) => {
+        const data = await client.search({
+            index,
+            body: {
+                query: {
+                  bool: {
+                    must: [
+                      {
+                        match: {
+                          "service.type": "system"
+                        }
+                      }
+                    ],
+                    must_not: [
+                      {
+                        exists: {
+                          field: "isReaded"
+                        }
+                      }
+                    ]
+                  }
+                },
+                sort: [
+                  {
+                    "@timestamp": {
+                      order: "desc"
+                    }
+                  }
+                ]
+              }
+        }); 
+        this.#sendReadAuditResponseToElastic(client, index);
+        return data;
+    }
     #sendReadDataResponseToElastic = async (client, index) => {
         return await client.updateByQuery({
             index,
@@ -223,6 +257,23 @@ class Alert {
             },
         });
     };
+    #sendReadAuditResponseToElastic = async (client,index) => {
+        return await client.updateByQuery({
+            index,
+            body: {
+                script: {
+                    source: 'ctx._source.isReaded = true',
+                    lang: 'painless',
+                },
+                query: {
+                    match: {
+                        "service.type": "system"
+                      }
+                },
+            },
+        });
+    };
+    
 }
 
 module.exports = new Alert();
