@@ -1,8 +1,10 @@
 const getAlertController = require('./getAlertController');
-
-module.exports =  (indices, client, transporter) => {
-
-
-    getAlertController(indices, client, transporter);
-
+const getSpecialAlertsController = require('./getSpecialAlertsController');
+const getHardDiskStatus = require('./getHardDiskStatus')
+const getAuditAlertController = require('./getAuditAlertController')
+module.exports =  {
+    getSpecialAlertsController,
+    getHardDiskStatus,
+    getAlertController,
+    getAuditAlertController
 };

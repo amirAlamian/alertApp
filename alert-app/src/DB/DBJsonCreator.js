@@ -1,6 +1,8 @@
 const config = require('config');
 const indices  = config.get('indices');
+const specialIndices = config.get('specialIndices')
 const DB = {};
+const specialDB = {};
 const fs = require('fs');
 
 

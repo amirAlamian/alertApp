@@ -4,18 +4,23 @@ instances:
       - elasticsearch 
       - localhost
     ip:
-      - 192.168.10.214
+      - 136.243.209.146
   - name: kibana
     dns:
       - kibana
       - localhost
-      - 192.168.10.214
+      - 136.243.209.146
   - name: apm-server
     dns:
       - apm-server
       - localhost
-      - 192.168.10.214
+      - 136.243.209.146
   - name: alert-app
     dns:
       - alert-app
       - localhost
+  - name: logstash
+    dns:
+      - logstash
+      - localhost
+      - 136.243.209.146 

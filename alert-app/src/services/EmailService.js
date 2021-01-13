@@ -7,17 +7,19 @@ class EmailService{
 
 
   init = () => {
-      const transporter = nodemailer.createTransport({
-          host: email.host,
-          port: email.port,
-          secure: false,
-          tls: { rejectUnauthorized: false },
-          auth: {
-              user: email.auth[0].username,
-              pass: email.auth[0].password
-          }
-      });
-      return transporter;
+      if(email.status) {
+          const transporter = nodemailer.createTransport({
+              host: email.host,
+              port: email.port,
+              secure: false,
+              tls: { rejectUnauthorized: false },
+              auth: {
+                  user: email.auth[0].username,
+                  pass: email.auth[0].password
+              }
+          });
+          return transporter;
+      }
   }
 
 
